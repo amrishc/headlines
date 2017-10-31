@@ -10,9 +10,9 @@ RSS_FEEDS = {'google': 'https://news.google.com/rss?gl=US&ned=us&hl=en',
              'iol': 'http://www.iol.co.za/cmlink/1.640'}
 
 
-@app.route('/')
+@app.route('/', methods=['GET', "POST"])
 def get_news():
-    query = request.args.get("publication")
+    query = request.form.get("publication")
     if not query or query.lower() not in RSS_FEEDS:
         publication = "bbc"
     else:
