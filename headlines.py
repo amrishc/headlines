@@ -12,7 +12,7 @@ RSS_FEEDS = {'google': 'https://news.google.com/rss?gl=US&ned=us&hl=en',
 
 @app.route('/')
 @app.route('/<publication>')
-def get_news(publication='bbc') -> 'html':
+def get_news(publication='bbc'):
     feed = feedparser.parse(RSS_FEEDS[publication])
     return render_template("home.html",articles=feed['entries'])
 
