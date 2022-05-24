@@ -1,16 +1,21 @@
-from flask import Flask, render_template, request, make_response
-import json, urllib.request, urllib.error
-import feedparser
 import datetime
+import json
+import urllib.error
+import urllib.request
 
-DEFAULTS = {'publication': 'iol',
+import feedparser
+from flask import Flask, render_template, request, make_response
+
+DEFAULTS = {'publication': 'bbc',
             'city': 'London,UK',
             'currency_from': 'GBP',
-            'current_to': 'USD'
+            'currency_to': 'USD'
             }
 
 WEATHER_URL = "http://api.openweathermap.org/data/2.5/weather?q={}&units=metric&appid=fc21e6c8692dc2065add7cb7b4b414de"
-CURRENCY_URL = "https://openexchangerates.org/api/latest.json?app_id=461dd3f3715c43b785dffc47832216cd"
+# CURRENCY_URL = "https://openexchangerates.org/api/latest.json?app_id=461dd3f3715c43b785dffc47832216cd"
+CURRENCY_URL = "https://openexchangerates.org/api/latest.json?app_id=c7ebd8e96b2242fda2823e2bfa5fb431"
+
 app = Flask(__name__)
 
 RSS_FEEDS = {'google': 'https://news.google.com/rss?gl=US&ned=us&hl=en',
@@ -22,8 +27,10 @@ RSS_FEEDS = {'google': 'https://news.google.com/rss?gl=US&ned=us&hl=en',
 @app.route('/')
 def home():
     # Get Customized headlines, based on user input or default
-    publication = request.args.get('publication')
+    # request.args.get('publication')
+    #  publication = request.args.get('publication'
     publication = get_value_with_fallback('publication')
+    print(publication)
     articles = get_news(publication)
 
     city = get_value_with_fallback('city')
